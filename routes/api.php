@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\General\EncryptionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// use this route group to decrypt and log the request
+
 Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
 
+    Route::post('register', [RegisterController::class, 'register']);
+
 });
+
+Route::post('decrypt', [EncryptionController::class, 'decrypt'])->middleware(['decrypt','logData']);
+Route::post('encrypt', [EncryptionController::class, 'encrypt']);
