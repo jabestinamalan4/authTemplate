@@ -22,21 +22,14 @@ trait HelperTrait {
 
     public function checkUser($user,$request)
     {
-        if ($user->type == 'user') {
-            if($request->googleUser == 0 && Hash::check($request->password, $user->password)){
-                return $user;
-            }
-            elseif($request->googleUser == 1){
-                return $user;
-            }
-            else{
-                $response = ['status' => false, "message"=> ['These credentials do not match our records.']];
-                $encryptedResponse['data'] = $this->encryptData($response);
-                return $encryptedResponse;
-            }
+        if($request->googleUser == 0 && Hash::check($request->password, $user->password)){
+            return $user;
+        }
+        elseif($request->googleUser == 1){
+            return $user;
         }
         else{
-            $response = ['status' => false, "message"=> ['This User does not have privilege']];
+            $response = ['status' => false, "message"=> ['These credentials do not match our records.']];
             $encryptedResponse['data'] = $this->encryptData($response);
             return $encryptedResponse;
         }
