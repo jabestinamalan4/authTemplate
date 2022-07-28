@@ -30,6 +30,7 @@ Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
     Route::post('resend-otp', [RegisterController::class, 'resend_otp']);
 
     Route::post('login', [LoginController::class, 'login']);
+    Route::get('logout', [LoginController::class, 'logout'])->middleware('auth:api');
 
 });
 

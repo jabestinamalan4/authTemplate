@@ -75,4 +75,16 @@ class LoginController extends Controller
             return response($user,200);
         }
     }
+
+    public function logout(Request $request) {
+        $token = $request->user()->token();
+        $token->revoke();
+	    $user_id = auth()->user()->id;
+
+        $response['status'] = true;
+        $response["message"] = ["Successfully Logged Out"];
+        $encryptedResponse['data'] = $this->encryptData($response);
+
+        return response($encryptedResponse, 200);
+    }
 }
