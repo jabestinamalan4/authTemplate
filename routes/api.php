@@ -26,6 +26,7 @@ Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
 
     Route::post('register', [RegisterController::class, 'register']);
     Route::post('verify-otp', [RegisterController::class, 'otp_verification']);
+    Route::post('resend-otp', [RegisterController::class, 'resend_otp']);
 
 });
 

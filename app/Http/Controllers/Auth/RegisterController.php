@@ -151,4 +151,48 @@ class RegisterController extends Controller
 
     }
 
+    public function resend_otp(Request $request)
+    {
+        if (gettype($request->input) == 'array') {
+            $inputData = (object) $request->input;
+        }
+        else{
+            $inputData = $request->input;
+        }
+
+        $rulesArray = [
+                        'userId' => 'required'
+                    ];
+
+        $validatedData = Validator::make((array)$inputData, $rulesArray);
+
+        if($validatedData->fails()) {
+            $response = ['status' => false, "message"=> [$validatedData->errors()->first()]];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+        }
+
+        $user_id = Crypt::decryptString($inputData->userId);
+        $data = User::where('id',$user_id)->first();
+        $otp = random_int(100000, 999999);
+        $update = User::where('id', $user_id)->update(array('otp' => $otp));
+        $user = User::find($user_id);
+        if (isset($user->id)) {
+            dispatch(new SendEmailJob($user));
+
+            $response['status'] = true;
+            $response["message"] = ["User Registered Successfully"];
+            $response['response']["userId"] = $inputData->userId;
+
+            $encryptedResponse['data'] = $this->encryptData($response);
+
+            return response($encryptedResponse, 200);
+        }
+        else{
+            $response = ['status' => false, "message"=> ['User not found']];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+        }
+    }
+
 }
