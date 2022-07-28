@@ -25,6 +25,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
 
     Route::post('register', [RegisterController::class, 'register']);
+    Route::post('verify-otp', [RegisterController::class, 'otp_verification']);
 
 });
 

@@ -86,4 +86,69 @@ class RegisterController extends Controller
         return response($encryptedResponse, 200);
 
     }
+
+    public function otp_verification(Request $request){
+
+        if (gettype($request->input) == 'array') {
+            $inputData = (object) $request->input;
+        }
+        else{
+            $inputData = $request->input;
+        }
+
+        $rulesArray = [
+                        'otp' => 'max:6|required',
+                        'userId' => 'required'
+                    ];
+        $validatedData = Validator::make((array)$inputData, $rulesArray);
+
+        if($validatedData->fails()) {
+            $response = ['status' => false, "message"=> [$validatedData->errors()->first()]];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+        }
+
+        $status = true;
+        $code = 200;
+        $message = ["OTP Verified Successfully"];
+
+        //decryption
+        $user_id = Crypt::decryptString($inputData->userId);
+
+        $data = User::where('id',$user_id)->first();
+        if (isset($data->id)) {
+            if($data->otp == $inputData->otp && $data->valid != 1){
+
+                User::where('id', $user_id)->update(array('valid' => 1));
+
+                $accessToken = $data->createToken('authToken')->accessToken;
+                $response['response']['userId'] = $inputData->userId;
+                $response['response']['accessToken'] = $accessToken;
+            }
+            elseif($data->valid == 1){
+                $status = false;
+                $code = 200;
+                $message = ["User is already Verified"];
+            }
+            else{
+                $status = false;
+                $code = 200;
+                $message = ["OTP is Invalid"];
+            }
+        }
+        else{
+            $status = false;
+            $code = 200;
+            $message = ["User Id is Invalid"];
+        }
+
+        $response['status'] = $status;
+        $response["message"] = $message;
+
+        $encryptedResponse['data'] = $this->encryptData($response);
+
+        return response($encryptedResponse, $code);
+
+    }
+
 }
