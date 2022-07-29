@@ -32,6 +32,7 @@ Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
 
     Route::post('forget-password', [PasswordController::class, 'forget_otp']);
     Route::post('update-password', [PasswordController::class, 'update_password']);
+    Route::post('change-password', [PasswordController::class, 'change_password'])->middleware('auth:api');
 
     Route::post('login', [LoginController::class, 'login']);
     Route::get('logout', [LoginController::class, 'logout'])->middleware('auth:api');

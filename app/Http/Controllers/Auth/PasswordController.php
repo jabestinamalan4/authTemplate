@@ -128,4 +128,52 @@ class PasswordController extends Controller
         }
     }
 
+    public function change_password(Request $request)
+    {
+        if (gettype($request->input) == 'array') {
+            $inputData = (object) $request->input;
+        }
+        else{
+            $inputData = $request->input;
+        }
+
+        $rulesArray = [
+                        'userId' => 'required',
+                        'oldPassword'=> 'required',
+                        'password' => 'required'
+                    ];
+        $validatedData = Validator::make((array)$inputData, $rulesArray);
+
+        if($validatedData->fails()) {
+            $response = ['status' => false, "message"=> [$validatedData->errors()->first()]];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+        }
+
+        $user_id = Crypt::decryptString($inputData->userId);
+
+        $data = User::where('id',$user_id)->first();
+
+        $password = Hash::make($inputData->password);
+
+        $stat = Hash::check($inputData->oldPassword, $data->password);
+
+
+        if($stat == FALSE){
+            $response = ['status' => false, "message"=> ["Current password is Wrong"]];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+        }
+        else{
+            //update password here
+            $result = User::where('id', $user_id)->update(array('password' => $password));
+
+            $response = ['status' => true, "message"=> ["Password changed successfully"]];
+            $encryptedResponse['data'] = $this->encryptData($response);
+            return response($encryptedResponse, 200);
+
+        }
+
+    }
+
 }
