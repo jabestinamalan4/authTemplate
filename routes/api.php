@@ -31,6 +31,7 @@ Route::group(['middleware'=>['decrypt','logData'],'as'=>'account.'], function(){
     Route::post('resend-otp', [RegisterController::class, 'resend_otp']);
 
     Route::post('forget-password', [PasswordController::class, 'forget_otp']);
+    Route::post('update-password', [PasswordController::class, 'update_password']);
 
     Route::post('login', [LoginController::class, 'login']);
     Route::get('logout', [LoginController::class, 'logout'])->middleware('auth:api');
