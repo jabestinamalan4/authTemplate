@@ -46,6 +46,10 @@ Then use the following command to migrate all the tables to the your database
 
 `php artisan migrate`
 
+For installing the passport key use the following command 
+
+`php artisan passport:install`
+
 Then use the command to run the project
 
 `php artisan serve`
