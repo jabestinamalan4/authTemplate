@@ -1,0 +1,325 @@
+openapi: 3.0.0
+info:
+  title: Cloudin-Auth-Template
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:8000/api
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+security:
+  - bearerAuth: []
+tags:
+  - name: Encryption
+  - name: Registration
+  - name: Otp
+  - name: Password
+  - name: Login
+paths:
+  /decrypt:
+    post:
+      tags:
+        - Encryption
+      summary: Decrypt
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    tB7M/GoSPhRHEmP+io5ASKQJPwouOWP3+wqXn4Yuvrh+HtFCfwWrUFb8R0SyECWIgNtuXTBl5PuNwsbMHWxXSWj8mXXoS+wNYE/EN9x+uj0=
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /encrypt:
+    post:
+      tags:
+        - Encryption
+      summary: Encrypt
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Gowtham
+                email:
+                  type: string
+                  example: jabestin@cloudin.email
+                password:
+                  type: string
+                  example: jabi@129
+                phone:
+                  type: integer
+                  example: "9585811802"
+                gender:
+                  type: integer
+                  example: "1"
+                googleUser:
+                  type: integer
+                  example: "0"
+                userId:
+                  type: string
+                  example: >-
+                    eyJpdiI6IjgrRnlPUmZsbFJ3R1dZK1YwMDhoYXc9PSIsInZhbHVlIjoicjF0Z21nNjgzemVyUGMxaWFLVmJjQT09IiwibWFjIjoiZWY1MWU3ZTRjMGQ4NWY4MjQwZGFmNTcxMDFhMDgxNzk5NWE5Y2VkNWZlNmFhMTFhN2E3YmQwOWU5NDM2OTBhYyIsInRhZyI6IiJ9
+                otp:
+                  type: integer
+                  example: "816860"
+                userName:
+                  type: string
+                  example: jabestin@cloudin.email
+                oldPassword:
+                  type: string
+                  example: jabi@129
+                typeId:
+                  type: integer
+                  example: "1"
+                categoryName:
+                  type: string
+                  example: News test nabe 1
+                catImg:
+                  type: string
+                  format: binary
+                categoryId:
+                  type: integer
+                  example: "16"
+                promotionName:
+                  type: string
+                  example: Jabestin 1
+                promotionUrl:
+                  type: string
+                  example: http://dev.cryptotrack.news/new_categories
+                promotionId:
+                  type: integer
+                  example: "25"
+                shortNews:
+                  type: string
+                  example: telephobe
+                longNews:
+                  type: string
+                  example: >-
+                    The Mayor has been a proponent of the crypto industry and
+                    has now pledged support for sustainable Bitcoin miners by
+                    asking Governor Hochul to veto a two-year moratorium on
+                    mining.
+
+                    New York City’s Mayor Eric Adams spoke out on Monday, June
+                    13, against a bill just one step away from effectively
+                    banning Bitcoin mining in the state for the next two years.
+
+
+                    The bill is designed to place a two-year moratorium on Proof
+                    of Work (PoW) crypto miners who do not use 100% renewable
+                    energy. At the same time, New York state’s environmental
+                    agency is investigating the effects of mining on the
+                    environment. The bill passed on June 3 in the State Assembly
+                    and now awaits Governor Kathy Hochul’s signature to become a
+                    law.
+
+
+                    Mayor Adams told Crain’s on Monday that he intends to
+                    request Governor Hochul veto the bill due to the economic
+                    damage it will cause the state's people. Mayor Adams has
+                    been a frequent proponent of the crypto industry, previously
+                    accepting BTC instead of cash for his salary payments.
+                sourceName:
+                  type: string
+                  example: cointelegraph
+                sourceUrl:
+                  type: string
+                  example: >-
+                    https://cointelegraph.com/news/nyc-mayor-eric-adams-speaks-out-against-pow-mining-ban-legislation
+                bannerImg:
+                  type: string
+                sourceImg:
+                  type: string
+                newsId[]:
+                  type: string
+                  example: >-
+                    eyJpdiI6IlV6UlRPRXRMWW1kRGNEVldXbWRLV2c9PSIsInZhbHVlIjoiNi83c2xPUVZGVGlJYWoyVFV2b3JBQT09IiwibWFjIjoiNTRkMGI1NDJjNmFlZWJkODJkZWRhM2JkYzk2YWQyNjBmMDBmMzg3Nzc2MDBmYzc3ZWE0OWQyMmY1ZGRmYjkxMiIsInRhZyI6IiJ9
+                clearAll:
+                  type: integer
+                  example: "0"
+                appVersion:
+                  type: number
+                  example: "1.0"
+                page:
+                  type: integer
+                  example: "1"
+                scheduledTime:
+                  type: string
+                  example: "2022-07-25 17:10:00"
+                title:
+                  type: string
+                  example: Fun
+                content:
+                  type: string
+                  example: bjdcnjkklzmlvml.MZXMbml.zxml
+                blogId:
+                  type: string
+                  example: >-
+                    eyJpdiI6IlV6UlRPRXRMWW1kRGNEVldXbWRLV2c9PSIsInZhbHVlIjoiN01hY3NlL2NYTEJYNGpaek9PdmFFZz09IiwibWFjIjoiODBjYjQzMTc3MWQ4MWE3M2QwMjJhZmNiMDRhODMwYWUwM2YxZWZlYjRiZTIzZjAwNjlhZTJjMzE5NGU3NmY5YSIsInRhZyI6IiJ9
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /register:
+    post:
+      tags:
+        - Registration
+      summary: Register
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    BOntZJ41FQsDZNVDwll4hRk/z6zOpTa65lgmuy1U7SUInzl8n9QSQJ9kYHwLrR4STBBnvrCrZ30Uc05+H+Uu71TqhohQ8dY+g0WMdnVBOIl2boW7c5xScbyr4UiBczyz
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /resend-otp:
+    post:
+      tags:
+        - Otp
+      summary: Resend OTP
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    EiuNfVw7GkJPhwWCT12VciAf4qObJMqJ+v6m1YFLPnRlvdUNRZznnGX8l14tVh2gEkrUyQ99m+34+97ITVRifsaXVeq4+IC0FLtQXkioLhv66WALjSX6ng0LSC1h9dewB8kuLQ3ogCN9WjhxaXwjnYiivTO+lOFBHPAB6I5aBXg7GcMZpWFh3bF9vYvdqPp6hmE+AC5xPi/mQ65C4taXF9l7pzKbIm2jc+Q3+weiqpclr2epd3sLIvMIaXvPEVWGaJOiQRq/H3SgTG8W5AEkxrMNM19sQh00Sfnt5aL4TWahzYly4fnGyH9Ok82oiwrW
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /verify-otp:
+    post:
+      tags:
+        - Otp
+      summary: Otp Verification
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    EiuNfVw7GkJPhwWCT12VciAf4qObJMqJ+v6m1YFLPnRlvdUNRZznnGX8l14tVh2gEkrUyQ99m+34+97ITVRifsaXVeq4+IC0FLtQXkioLhv66WALjSX6ng0LSC1h9dewB8kuLQ3ogCN9WjhxaXwjnYiivTO+lOFBHPAB6I5aBXg7GcMZpWFh3bF9vYvdqPp6hmE+AC5xPi/mQ65C4taXF9l7pzKbIm2jc+Q3+weiqpclr2epd3sLIvMIaXvPEVWGaJOiQRq/H3SgTG8W5AEkxrMNM19sQh00Sfnt5aL4TWahzYly4fnGyH9Ok82oiwrW
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /forget-password:
+    post:
+      tags:
+        - Password
+      summary: Forget Password
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    tB7M/GoSPhRHEmP+io5ASKQJPwouOWP3+wqXn4Yuvrhw+WaoFz8O4GkKGUslmYlf
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /update-password:
+    post:
+      tags:
+        - Password
+      summary: Update Password
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    MunTDzNOH7wMnKTKBYQ16y9PvKdnlePvDp+QY9Bj1J3BQCvrYzk9/rtTlA97FqLNDqdklh3MN4Xi1PWRkfxDOfj9Ns+RgK1PePe1sctSHyg3lcdsKiSM4pbxgHq8hUSLd43bBa9hS0O0B9qKxzhYrlPzMG5FH1r0dlm+cO/lSNhnALqriu7OK2fNzflXFrbVY+UKrJB1wTJUdov5F1coZUSHmPWY11XBGwTachphy0vB4+/GO/4OgnvTAyj2XizTUHuF8CnyQ0DbSlW4nU11fZeeyIh+U3KCjLLQoa8BsswagbV39uqIasAgKwQXhix91SuTrf+7NWz0wGHDO65Aqw==
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /change-password:
+    post:
+      tags:
+        - Password
+      summary: Change Password
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    7mEyvD4HtpRqNTzUuoNLpl2GpwRpYLaFkg5ws6xiiAyO4Ac1e6T0NkRWFJrdQ22uNxTE+Aq8SVoQw67W/7HjyQULCYIdc8TPPoApvKVpkohIYOCuIK591EmRnXlviPyQEb3/hkt/7HDJR8qmZKbPKqxFd3t4fMp0/dx4uIqyEVYTXNGz83YfX2W9sLHV2vnPyQOj32WnkAIlBCFk9CeFZ/grhRpS535k1UR7RkKnDphMiw76wt2vfRJKIvcZerCoid024phHoltNGsbeqHrG7FHf+3xzqfZr7Clqa/5wLjHS82vHJZcsclTU5iWueOIYMH1aHf/xcWAAcdXLHEaKFbGmDxz06OyL1DVj/4IH8yY=
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /login:
+    post:
+      tags:
+        - Login
+      summary: Login
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                input:
+                  type: string
+                  example: >-
+                    tB7M/GoSPhRHEmP+io5ASKQJPwouOWP3+wqXn4Yuvrh+HtFCfwWrUFb8R0SyECWIgNtuXTBl5PuNwsbMHWxXSWj8mXXoS+wNYE/EN9x+uj0=
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
+  /logout:
+    get:
+      tags:
+        - Login
+      summary: Logout
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json: {}
